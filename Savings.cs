@@ -1,9 +1,10 @@
 /*
 Name: Moriah Payne
-Date: 5/25/2025
-Description: Week 2 - Bank Account Management Application
+Date: 6/1/2025
+Assignment: Week 3 - Bank Account Management Application
+Description: derived class demonstrating inheritance, overriding abstract methods, and constructors
 */
-public class Savings : Account
+public class Savings : Account, ITransaction
 //class demonstrates inheritance because the Savings class is derived from the Account class
 {
     public string AccountType { get; set; }
@@ -23,9 +24,9 @@ public class Savings : Account
             base.Withdraw(amount);
         }
     }
-    public override void DisplayInfo()
+    public override void DisplayAccountInfo()
     {
         Console.WriteLine($"Account Type: {AccountType}");
-        base.DisplayInfo();
+        base.DisplayAccountInfo();
     }
 }

@@ -1,13 +1,20 @@
 /*
 Name: Moriah Payne
-Date: 5/25/2025
-Description: Week 2 - Bank Account Management Application
+Date: 6/1/2025
+Assignment: Week 3 - Bank Account Management Application
+Description: abstract base class for bank accounts. Demonstrates abstraction, constructors, and access specifiers
 */
-public class Account : ITransaction
+public abstract class Account
 {
     public string AccountId { get; set; }
-    public User AccountHolder { get; set; } //demonstrates composition because accounts have a user
+    public User? AccountHolder { get; set; } //demonstrates composition because accounts have a user
     public double Balance { get; protected set; }
+    //default constructor
+    protected Account()
+    {
+        AccountId = "000000";
+        Balance = 0.00;
+    }
     public Account(string accountId, User accountHolder, double balance)
     {
         AccountId = accountId;
@@ -16,8 +23,11 @@ public class Account : ITransaction
     }
     public virtual void Deposit(double amount)
     {
-        Balance += amount;
-        Console.WriteLine($"Deposited ${amount:F2} into {AccountId}. New balance: ${Balance:F2}");
+        if (amount > 0)
+        {
+            Balance += amount;
+            Console.WriteLine($"Deposited ${amount:F2} into {AccountId}. New balance: ${Balance:F2}");
+        }
     }
     public virtual void Withdraw(double amount)
     {
@@ -31,7 +41,7 @@ public class Account : ITransaction
             Console.WriteLine($"Withdrew ${amount:F2} from {AccountId}. New balance: ${Balance:F2}");
         }
     }
-    public virtual void DisplayInfo()
+    public virtual void DisplayAccountInfo()
     {
         Console.WriteLine($"Account ID: {AccountId}");
         Console.WriteLine($"User Name: {AccountHolder.Name}");

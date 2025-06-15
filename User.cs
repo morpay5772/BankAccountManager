@@ -1,16 +1,31 @@
 /*
 Name: Moriah Payne
-Date: 5/25/2025
-Description: Week 2 - Bank Account Management Application
+Date: 6/1/2025
+Assignment: Week 3 - Bank Account Management Application
+Description: represents a user, demonstrates constructors and access specifiers
 */
 public class User
 //Class demonstrates composition because accounts have a user
 {
     public int UserId { get; set; }
-    public string Name { get; set; }
+    public string Name { get; private set; }
+    private List<Account> accounts;
     public User(int userId, string name)
     {
         UserId = userId;
         Name = name;
+        accounts = new List<Account>();
+    }
+    public void AddAccount(Account acct)
+    {
+        accounts.Add(acct);
+    }
+    public void DisplayAccounts()
+    {
+        Console.WriteLine($"\n{Name}'s Accounts:");
+        foreach (Account acct in accounts)
+        {
+            acct.DisplayAccountInfo();
+        }
     }
 }

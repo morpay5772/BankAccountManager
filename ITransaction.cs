@@ -1,7 +1,8 @@
 /*
 Name: Moriah Payne
-Date: 5/25/2025
-Description: Week 2 - Bank Account Management Application
+Date: 6/1/2025
+Assignment: Week 3 - Bank Account Management Application
+Description: interface for transaction operations
 */
 public interface ITransaction
 {
