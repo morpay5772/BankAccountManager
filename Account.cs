@@ -1,7 +1,7 @@
 /*
 Name: Moriah Payne
-Date: 6/1/2025
-Assignment: Week 3 - Bank Account Management Application
+Date: 6/8/2025
+Assignment: Week 4 - Bank Account Management Application
 Description: abstract base class for bank accounts. Demonstrates abstraction, constructors, and access specifiers
 */
 public abstract class Account
@@ -44,8 +44,15 @@ public abstract class Account
     public virtual void DisplayAccountInfo()
     {
         Console.WriteLine($"Account ID: {AccountId}");
+    if (AccountHolder != null)
+    {
         Console.WriteLine($"User Name: {AccountHolder.Name}");
-        Console.WriteLine($"Balance: ${Balance:F2}");
-        Console.WriteLine();
+    }
+    else
+    {
+        Console.WriteLine("User Name: Unknown (AccountHolder is null)");
+    }
+    Console.WriteLine($"Balance: ${Balance:F2}");
+    Console.WriteLine();
     }
 }

@@ -1,7 +1,7 @@
 /*
 Name: Moriah Payne
-Date: 6/1/2025
-Assignment: Week 3 - Bank Account Management Application
+Date: 6/8/2025
+Assignment: Week 4 - Bank Account Management Application
 Description: represents a user, demonstrates constructors and access specifiers
 */
 public class User

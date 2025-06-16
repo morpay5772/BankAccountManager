@@ -1,64 +1,78 @@
 ﻿/*
 Name: Moriah Payne
-Date: 6/1/2025
-Assignment: Week 3 - Bank Account Management Application
+Date: 6/8/2025
+Assignment: Week 4 - Bank Account Management Application
 Description: main application - demonstrates abstraction, constructors, access specifiers, and displays instances
 */
-public class Application
+using System.Collections.Generic;
+using System.Data.SQLite;
+using System.IO;
+public class BankApplication
 {
+    static string dbName = "MPBankApp.db";
     static void Main(string[] args)
     {
         Console.WriteLine("------------------------------------------");
-        Console.WriteLine("Week 3 Bank Account Management Application");
+        Console.WriteLine("Week 4 Bank Account Management Application");
         Console.WriteLine("       Developed by Moriah Payne          ");
         Console.WriteLine("------------------------------------------");
         Console.WriteLine("\"Money often costs too much.\" - Ralph Waldo Emerson\n");
-        Console.WriteLine("Welcome! This is a demonstration of abstraction, constructors, access specifiers, inheritance, composition, interfaces, and polymorphism.\n");
-
-        // Create a list to hold multiple account types with an interface
-        List<ITransaction> accounts = new List<ITransaction>();
-
-        //Creating user instances demonstrates composition
-        User user1 = new User(101, "John Doe");
-        User user2 = new User(102, "Jane Smith");
-        User user3 = new User(103, "Andrew Garfunkel");
-
-        //creating accounts demonstrates both inheritance and compsition
-        Checking checkingAccount1 = new Checking("CHK001", user1, 1500.00);
-        Checking checkingAccount2 = new Checking("CHK002", user2, 5500.00);
-        Savings savingsAccount1 = new Savings("SAV001", user2, 2500.00);
-        Savings savingsAccount2 = new Savings("SAV002", user3, 5000.00);
-
-        //adding the account instances to the list of accounts 
-        accounts.Add(checkingAccount1);
-        accounts.Add(checkingAccount2);
-        accounts.Add(savingsAccount1);
-        accounts.Add(savingsAccount2);
-
-        //adding accounts to lists for individual users
-        user1.AddAccount(checkingAccount1);
-        user2.AddAccount(checkingAccount2);
-        user2.AddAccount(savingsAccount1);
-        user3.AddAccount(savingsAccount2);
-
-        //permorm transactions using polymorphism
-        Console.WriteLine("--------- Performing Transactions --------");
-        foreach (ITransaction account in accounts)
+        Console.WriteLine("Welcome! This is a demonstration of CRUD, abstraction, constructors, access specifiers, inheritance, composition, interfaces, and polymorphism.\n");
+        //creates database file
+        if (!File.Exists(dbName))
         {
-            account.Deposit(500);
-            account.Withdraw(300);
-            account.Deposit(1000);
-            Console.WriteLine();
+            //abstraction
+            SQLiteConnection.CreateFile(dbName);
         }
-
-        //display account information using polymorphism
-        Console.WriteLine("----------- Account Information ----------");
-        foreach (ITransaction account in accounts)
+        //constructor
+        using var conn = new SQLiteConnection($"Data Source={dbName};Version=3;");
+        conn.Open();
+        //abstraction
+        AccountDB.CreateTables(conn);
+        //user menu
+        while (true)
         {
-            ((Account)account).DisplayAccountInfo();
+            Console.WriteLine("\nMenu:");
+            Console.WriteLine("1. Add User");
+            Console.WriteLine("2. Add Account to User");
+            Console.WriteLine("3. View All Users and Accounts");
+            Console.WriteLine("4. Update Account Balance");
+            Console.WriteLine("5. Delete Account");
+            Console.WriteLine("6. Exit");
+            Console.Write("Choose an option: ");
+
+            string? choice = Console.ReadLine();
+            if (!string.IsNullOrWhiteSpace(choice))
+            {
+                string name = choice;
+            }
+            else
+            {
+                Console.WriteLine("Name is required.");
+            }
+            switch (choice)
+            {
+                case "1":
+                    AccountDB.AddUser(conn);
+                    break;
+                case "2":
+                    AccountDB.AddAccountToUser(conn);
+                    break;
+                case "3":
+                    AccountDB.ViewUsersAndAccounts(conn);
+                    break;
+                case "4":
+                    AccountDB.UpdateAccountBalance(conn);
+                    break;
+                case "5":
+                    AccountDB.DeleteAccount(conn);
+                    break;
+                case "6":
+                    return;
+                default:
+                    Console.WriteLine("Invalid option. Try again.");
+                    break;
+            }
         }
-        //display account information for Jane Smith
-        Console.WriteLine("Displaying Jane Smith's account information");
-        user2.DisplayAccounts();
     }
 }
